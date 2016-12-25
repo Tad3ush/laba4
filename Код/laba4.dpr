@@ -1,0 +1,72 @@
+program laba4;
+
+{$APPTYPE CONSOLE}
+
+uses
+  SysUtils;
+
+var
+  ARR: array of integer;
+  i,n,null,one,two: integer;
+
+procedure ReadVar(var ToRead : integer; LeftBorder, RightBorder : integer);
+begin
+  {$I-}
+  repeat
+  begin
+    readln(ToRead);
+    if (IOResult <> 0) or (ToRead < LeftBorder) or (ToRead > RightBorder) then begin
+      ToRead := LeftBorder-1;
+      writeln('You entered is not appropriate data, please,  enter an integer from ',LeftBorder,' to ',RightBorder,' incl.');
+    end;
+  end;
+  until (IOResult = 0) and (ToRead > LeftBorder-1) and (ToRead < RightBorder+1);
+  {$I+}
+end;
+
+begin
+  null := 0;
+  one := 0;
+  two := 0;
+  i := 1;
+  write('Enter the number of elements in the array:');
+  ReadVar(n, 0, 1000);
+  SetLength(ARR, n);
+  while i <= n do
+  begin
+    write('Enter the ', i,' element of the array:');
+    ReadVar(ARR[i], 0, 2);
+    case ARR[i] of
+      0 : null := null + 1;
+      1 : one := one + 1;
+      2 : two := two + 1;
+    end;
+    i := i + 1;
+  end;
+  i := 1;
+  while i <= null do
+  begin
+    ARR[i] := 0;
+    i := i + 1;
+  end;
+  i := null + 1;
+  while i <= (null + one) do
+  begin
+    ARR[i] := 1;
+    i := i + 1;
+  end;
+  i := null + one + 1;
+  while i <= n do
+  begin
+    ARR[i] := 2;
+    i := i + 1;
+  end;
+  i := 1;
+  write('The resulting array:');
+  while i <= n do
+  begin
+    write(ARR[i],',');
+    i := i + 1;
+  end;
+  readln;
+end.
